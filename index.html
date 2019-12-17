@@ -1,73 +1,96 @@
 <!DOCTYPE html>
 <html>
-<title>Home</title>
+<title>Musselman Web Design</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
+<body class="w3-amber w3-mobile">
+  <div id="hook" class="w3-center w3-middle">
+    <img src="/android-chrome-192x192.png" alt="Musselman Web Design">
+    <h1>Welcome to your new
+      <span
+         class="txt-rotate"
+         data-period="2000"
+         data-rotate='[ "website.", "business.", "home."]'></span>
+    </h1>
+    <h2>A single call is all it takes.</h2>
+  </div>
+<div class="w3-center">
+  <a href="https://shop.jmusselman.dev">
+    <Button class="w3-black w3-btn w3-center w3-round-xlarge w3-riple ">
+      Get Started
+    </Button>
+  </a>  
+</div>
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  height: 100%;
-}
 
+<script>
+var TxtRotate = function(el, toRotate, period) {
+  this.toRotate = toRotate;
+  this.el = el;
+  this.loopNum = 0;
+  this.period = parseInt(period, 10) || 2000;
+  this.txt = '';
+  this.tick();
+  this.isDeleting = false;
+};
 
-/* Create three equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 10px;
-  height: 95%; /* Should be removed. Only for demonstration */
-}
+TxtRotate.prototype.tick = function() {
+  var i = this.loopNum % this.toRotate.length;
+  var fullTxt = this.toRotate[i];
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Style the footer */
-.footer {
-  background-color: #f1f1f1;
-  padding: 10px;
-  text-align: center;
-  height: 5%;
-}
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media (max-width: 600px) {
-  .column {
-    width: 100%;
+  if (this.isDeleting) {
+    this.txt = fullTxt.substring(0, this.txt.length - 1);
+  } else {
+    this.txt = fullTxt.substring(0, this.txt.length + 1);
   }
-}
-</style>
-</head>
-<body>
+
+  this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+  var that = this;
+  var delta = 300 - Math.random() * 100;
+
+  if (this.isDeleting) { delta /= 2; }
+
+  if (!this.isDeleting && this.txt === fullTxt) {
+    delta = this.period;
+    this.isDeleting = true;
+  } else if (this.isDeleting && this.txt === '') {
+    this.isDeleting = false;
+    this.loopNum++;
+    delta = 500;
+  }
+
+  setTimeout(function() {
+    that.tick();
+  }, delta);
+};
+
+window.onload = function() {
+  var elements = document.getElementsByClassName('txt-rotate');
+  for (var i=0; i<elements.length; i++) {
+    var toRotate = elements[i].getAttribute('data-rotate');
+    var period = elements[i].getAttribute('data-period');
+    if (toRotate) {
+      new TxtRotate(elements[i], JSON.parse(toRotate), period);
+    }
+  }
+  // INJECT CSS
+  var css = document.createElement("style");
+  css.type = "text/css";
+  css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+  document.body.appendChild(css);
+};
 
 
-<div class="row">
-  <div class="column" style="background-color:gold;">Shop</div>
-  <div class="column" style="background-color:cyan;">Portfolio</div>
-  <div class="column" style="background-color:blue;">Blog</div>
-</div>
 
-<div class="footer">
-    <a href="https://www.facebook.com/Musselman-Web-Design-and-Development-112033993556547/"><i
-            class="fa fa-facebook-official"></i></a>
-    <a href="https://twitter.com/MusselmanWeb"><i class="fa fa-twitter"></i></a>
-    <p class="w3-small">Copyright ©2019 Musselman Web Design</p>
-</div>
-
+Resources
+</script>
 </body>
 </html>

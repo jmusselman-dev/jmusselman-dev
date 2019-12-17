@@ -254,3 +254,18 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
   font-family: "Courier New", Courier, monospace;
   font-size: 25px;
 }
+html,body {
+  font-family: 'Raleway', sans-serif;
+  padding: 3em 2em;
+  font-size: 18px;
+  color: #aaa
+}
+
+h1,h2 {
+  font-weight: 200;
+  margin: 0.4em 0;
+}
+h1 { font-size: 3.5em; }
+h2 {
+  font-size: 2em;
+}
